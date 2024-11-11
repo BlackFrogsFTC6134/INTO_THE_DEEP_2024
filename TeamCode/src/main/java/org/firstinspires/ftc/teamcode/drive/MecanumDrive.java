@@ -72,7 +72,7 @@ public final class MecanumDrive {
                 RevHubOrientationOnRobot.LogoFacingDirection.UP; //Blackfrog_Setting for 2023 season
         public RevHubOrientationOnRobot.UsbFacingDirection usbFacingDirection =
                 RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD; //Blackfrog_Setting for 2023 season
-
+/*
         // drive model parameters
         public double inPerTick = 0.00590301348838582096160089725805; // Blackfrog_Setting. 141.24/5583.75 https://rr.brott.dev/docs/v1-0/tuning. Refer to ForwardPushTest
         public double lateralInPerTick = inPerTick; // Blackfrog_Setting https://rr.brott.dev/docs/v1-0/tuning. Refer to LateralPushTest
@@ -82,6 +82,17 @@ public final class MecanumDrive {
         public double kS = 1; // Blackfrog_Setting 1.1890544370408778
         public double kV = 0; // Blackfrog_Setting 0.00392616896265144
         public double kA = 0.06; // Blackfrog_Setting 0.001995
+*/
+        // drive model parameters
+        public double inPerTick =0.00295897; // Blackfrog_Setting. 141.24/5583.75 https://rr.brott.dev/docs/v1-0/tuning. Refer to ForwardPushTest
+        public double lateralInPerTick = 0.002101698017976019; // Blackfrog_Setting https://rr.brott.dev/docs/v1-0/tuning. Refer to LateralPushTest
+        public double trackWidthTicks = 4970.539852078557;//35.320744330791776; // Blackfrog_Setting https://rr.brott.dev/docs/v1-0/tuning. Refer to either Drive Encoders or Dead Wheels section
+
+        // feedforward parameters (in tick units)
+        public double kS = 0.8671020484248668; // Blackfrog_Setting 1.1890544370408778
+        public double kV =  0.0006063320933206687; // Blackfrog_Setting 0.00392616896265144
+        public double kA =0.0001; // Blackfrog_Setting 0.001995
+
 
         // path profile parameters (in inches)
         public double maxWheelVel = 50;
@@ -91,7 +102,7 @@ public final class MecanumDrive {
         // turn profile parameters (in radians)
         public double maxAngVel = Math.PI; // shared with path
         public double maxAngAccel = Math.PI;
-
+/*
         // path controller gains
         public double axialGain = 0.6;
         public double lateralGain = 0.0000000001;
@@ -100,8 +111,16 @@ public final class MecanumDrive {
         public double axialVelGain = 0.0000000001;
         public double lateralVelGain = 0.0000000001;
         public double headingVelGain = 0.0000000001; // shared with turn
+        */
+// path controller gains
+        public double axialGain = 1;
+        public double lateralGain = 3;
+        public double headingGain = 2.5; // shared with turn
 
-     }
+        public double axialVelGain = 0.1;
+        public double lateralVelGain = 1;
+        public double headingVelGain = 0.1; // shared with turn
+      }
 
     public static Params PARAMS = new Params();
     private static final String[] MOTOR_NAMES = {
@@ -166,19 +185,19 @@ public final class MecanumDrive {
             switch (REVERSE_SIDE) {
                 case RIGHT: {
                     // TODO: reverse encoders if needed
-                    leftFront.setDirection(DcMotorEx.Direction.REVERSE); // Blackfrog_Setting. If you’re using drive encoders, the ticks recorded should increase in a positive direction.
-                    leftBack.setDirection(DcMotorEx.Direction.REVERSE); // Blackfrog_Setting. If you’re using drive encoders, the ticks recorded should increase in a positive direction.
-                    rightBack.setDirection(DcMotorEx.Direction.FORWARD); // Blackfrog_Setting. If you’re using drive encoders, the ticks recorded should increase in a positive direction.
-                    rightFront.setDirection(DcMotorEx.Direction.FORWARD); // Blackfrog_Setting. If you’re using drive encoders, the ticks recorded should increase in a positive direction.
+                    leftFront.setDirection(DcMotorEx.Direction.FORWARD); // Blackfrog_Setting. If you’re using drive encoders, the ticks recorded should increase in a positive direction.
+                    leftBack.setDirection(DcMotorEx.Direction.FORWARD); // Blackfrog_Setting. If you’re using drive encoders, the ticks recorded should increase in a positive direction.
+                    rightBack.setDirection(DcMotorEx.Direction.REVERSE); // Blackfrog_Setting. If you’re using drive encoders, the ticks recorded should increase in a positive direction.
+                    rightFront.setDirection(DcMotorEx.Direction.REVERSE); // Blackfrog_Setting. If you’re using drive encoders, the ticks recorded should increase in a positive direction.
                     break;
-                }
+                }/*
                 case LEFT: {
                     leftFront.setDirection(DcMotorEx.Direction.FORWARD); // Blackfrog_Setting. If you’re using drive encoders, the ticks recorded should increase in a positive direction.
                     leftBack.setDirection(DcMotorEx.Direction.FORWARD); // Blackfrog_Setting. If you’re using drive encoders, the ticks recorded should increase in a positive direction.
                     rightBack.setDirection(DcMotorEx.Direction.REVERSE); // Blackfrog_Setting. If you’re using drive encoders, the ticks recorded should increase in a positive direction.
                     rightFront.setDirection(DcMotorEx.Direction.REVERSE); // Blackfrog_Setting. If you’re using drive encoders, the ticks recorded should increase in a positive direction.
                     break;
-                }
+                }*/
             }
         }
 
@@ -265,19 +284,19 @@ public final class MecanumDrive {
         switch (REVERSE_SIDE) {
             case RIGHT: {
                 // TODO: reverse encoders if needed
-                leftFront.setDirection(DcMotorEx.Direction.REVERSE); // Blackfrog_Setting. If you’re using drive encoders, the ticks recorded should increase in a positive direction.
-                leftBack.setDirection(DcMotorEx.Direction.REVERSE); // Blackfrog_Setting. If you’re using drive encoders, the ticks recorded should increase in a positive direction.
-                rightFront.setDirection(DcMotorEx.Direction.FORWARD); // Blackfrog_Setting. If you’re using drive encoders, the ticks recorded should increase in a positive direction.
-                rightBack.setDirection(DcMotorEx.Direction.FORWARD); // Blackfrog_Setting. If you’re using drive encoders, the ticks recorded should increase in a positive direction.
+                leftFront.setDirection(DcMotorEx.Direction.FORWARD); // Blackfrog_Setting. If you’re using drive encoders, the ticks recorded should increase in a positive direction.
+                leftBack.setDirection(DcMotorEx.Direction.FORWARD); // Blackfrog_Setting. If you’re using drive encoders, the ticks recorded should increase in a positive direction.
+                rightFront.setDirection(DcMotorEx.Direction.REVERSE); // Blackfrog_Setting. If you’re using drive encoders, the ticks recorded should increase in a positive direction.
+                rightBack.setDirection(DcMotorEx.Direction.REVERSE); // Blackfrog_Setting. If you’re using drive encoders, the ticks recorded should increase in a positive direction.
                 break;
-            }
+            }/*
             case LEFT: {
                 leftFront.setDirection(DcMotorEx.Direction.FORWARD); // Blackfrog_Setting. If you’re using drive encoders, the ticks recorded should increase in a positive direction.
                 leftBack.setDirection(DcMotorEx.Direction.FORWARD); // Blackfrog_Setting. If you’re using drive encoders, the ticks recorded should increase in a positive direction.
                 rightFront.setDirection(DcMotorEx.Direction.REVERSE); // Blackfrog_Setting. If you’re using drive encoders, the ticks recorded should increase in a positive direction.
                 rightBack.setDirection(DcMotorEx.Direction.REVERSE); // Blackfrog_Setting. If you’re using drive encoders, the ticks recorded should increase in a positive direction.
                 break;
-            }
+            }*/
         }
 
         motors = Arrays.asList(leftFront, leftBack, rightFront, rightBack);
