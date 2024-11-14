@@ -12,9 +12,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.drive.MecanumDrive;
 
-// https://gist.github.com/TheOutcastVirus/fc0de0afdcb37808288904e308a67dc7
-
-@Autonomous(name = "Straight Line Test", group = "Test")
+@Autonomous(name = "Near Observation Zone", group = "Test")
 public class NrObservaZn_Auton extends LinearOpMode {
     private Servo continuousIntakeServo1;
     private DcMotorEx linearViper = null;
@@ -59,20 +57,7 @@ public class NrObservaZn_Auton extends LinearOpMode {
         // Define the starting pose of the robot
         Pose2d startPose = new Pose2d(0, 0, 0);
 
-        // Create a trajectory to move forward by 24 inches
-        //TrajectoryActionBuilder tab1 = drive.actionBuilder(drive.pose)
-        //      .lineToY(24);
-
-        // Delcare Trajectory as such
-        Action TrajectoryAction1 = drive.actionBuilder(drive.pose)
-                .strafeTo(new Vector2d(26, 10))
-                .build();
-
-        Action TrajectoryAction2 = drive.actionBuilder(drive.pose)
-                .splineTo(new Vector2d(15, 20), Math.toRadians(90))
-                .build();
-
-        // Initialize claws. Additional configuration needed.
+         // Initialize claws. Additional configuration needed.
         continuousIntakeServo1 = hardwareMap.get(Servo.class, "clawServo");
 
         // Set initial positions
@@ -99,7 +84,9 @@ public class NrObservaZn_Auton extends LinearOpMode {
 
             Actions.runBlocking(
                     drive.actionBuilder(startPose)
-                            .strafeTo(new Vector2d(26.5, 10))
+//                            .strafeTo(new Vector2d(26.5, 10))
+                            .strafeTo(new Vector2d(29, 10))
+                            .waitSeconds(1)
                             .build()
 
             );
@@ -114,7 +101,26 @@ public class NrObservaZn_Auton extends LinearOpMode {
             linearViper.setPower(0);
             sleep(100);
             continuousIntakeServo1.setPosition(0.35);
-
+            sleep(1000);
+            //Strafing to the Observation zone
+ /*           Actions.runBlocking(
+                    drive.actionBuilder(startPose)
+                            .strafeTo(new Vector2d(-10.5, -50))
+                            .build()
+            );
+*/
+            //TO push the spike sample to the observation zone
+            Actions.runBlocking(
+                     drive.actionBuilder(drive.pose)
+                    .strafeTo(new Vector2d(26.5, -25))
+                    .waitSeconds(1)
+                    .lineToX(60)
+                    .waitSeconds(2)
+                    .splineTo(new Vector2d(60,-34), Math.toRadians(180))
+                    .waitSeconds(2)
+                    .lineToX(10)
+                    .build()
+            );
         }
     }
 }
