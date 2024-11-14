@@ -20,7 +20,7 @@ public class NrObservaZn_Auton extends LinearOpMode {
     double linearViperPower = 0;
     double rotateViperPower = 0;
     public static int RT_targetPosition = 3500;
-    public static int LI_targetPosition = 600;
+    public static int LI_targetPosition = 450;
 
     @Override
     public void runOpMode() {
@@ -85,7 +85,7 @@ public class NrObservaZn_Auton extends LinearOpMode {
             Actions.runBlocking(
                     drive.actionBuilder(startPose)
 //                            .strafeTo(new Vector2d(26.5, 10))
-                            .strafeTo(new Vector2d(29, 10))
+                            .strafeTo(new Vector2d(28, 10))
                             .waitSeconds(1)
                             .build()
 
