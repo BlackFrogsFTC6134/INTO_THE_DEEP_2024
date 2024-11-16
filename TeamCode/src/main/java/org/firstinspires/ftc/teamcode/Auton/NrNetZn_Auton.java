@@ -1,4 +1,3 @@
-
 package org.firstinspires.ftc.teamcode.Auton;
 
 import com.acmerobotics.roadrunner.Pose2d;
@@ -19,7 +18,7 @@ public class NrNetZn_Auton extends LinearOpMode {
     double linearViperPower = 0;
     double rotateViperPower = 0;
     public static int RT_targetPosition = 3500;
-    public static int LI_targetPosition = 450;
+    public static int LI_targetPosition = 575;
     public static int RT_targetPositionRung =4000;
 
     @Override
@@ -57,11 +56,6 @@ public class NrNetZn_Auton extends LinearOpMode {
         // Define the starting pose of the robot
         Pose2d startPose = new Pose2d(0, 0, 0);
 
-        // Create a trajectory to move forward by 24 inches
-        //TrajectoryActionBuilder tab1 = drive.actionBuilder(drive.pose)
-        //      .lineToY(24);
-
-
         // Initialize claws. Additional configuration needed.
         continuousIntakeServo1 = hardwareMap.get(Servo.class, "clawServo");
 
@@ -89,14 +83,16 @@ public class NrNetZn_Auton extends LinearOpMode {
 
             Actions.runBlocking(
                     drive.actionBuilder(startPose)
-                            .strafeTo(new Vector2d(28, 10))
+                            .strafeTo(new Vector2d(23, 0))
+                            /*** To move without hanging the spacimen ***/
+          //                  .strafeTo(new Vector2d(0, 27))
                             .build()
-
             );
+
             sleep(100);
             linearViper.setTargetPosition(LI_targetPosition);
-            linearViper.setPower(0.9);
             linearViper.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+            linearViper.setPower(0.9);
 
             while (linearViper.isBusy()) {
                 telemetry.addData("Current position", linearViper.getTargetPosition());
@@ -106,37 +102,19 @@ public class NrNetZn_Auton extends LinearOpMode {
             sleep(100);
             continuousIntakeServo1.setPosition(0.35);
             sleep(1000);
-
             //TO push the spike sample to the observation zone
             Actions.runBlocking(
                     drive.actionBuilder(drive.pose)
-                            .strafeTo(new Vector2d(26.5, 25))
+                            .strafeTo(new Vector2d(18, 27))
                             .waitSeconds(1)
-                            .lineToX(60)
+                            .lineToX(55)
                             .waitSeconds(2)
-                            .splineTo(new Vector2d(60,34), Math.toRadians(180))
+                            .turnTo(Math.toRadians(160))
+                            .strafeTo(new Vector2d(10, 50))
                             .waitSeconds(2)
-                            .lineToX(20)
-                            .turnTo(Math.toRadians(45))
-                            .strafeTo(new Vector2d(10, 40))
-                            .waitSeconds(2)
-                            .splineTo(new Vector2d(10,34), Math.toRadians(160))
-                     //       .turnTo(Math.toRadians(45))
-                            .lineToX(60)
-                            .turnTo(Math.toRadians(90))
-                            .lineToY(15)
+                            .lineToX(10)
                             .build()
             );
-            sleep(100);
-            rotateViper.setTargetPosition(RT_targetPositionRung);
-            rotateViper.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-            rotateViper.setPower(0.9);
-
-            while (rotateViper.isBusy()) {
-                telemetry.addData("Current position", rotateViper.getTargetPosition());
-                telemetry.update();
-            }
-            rotateViper.setPower(0);
             sleep(100);
         }
     }
