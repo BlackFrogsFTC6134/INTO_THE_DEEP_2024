@@ -88,8 +88,8 @@ public class Auton_Test {
             }
 
 
-            leftDrive.setPower(0);
-            rightDrive.setPower(0);
+            //leftDrive.setPower(0);
+            //rightDrive.setPower(0);
         }
 
 

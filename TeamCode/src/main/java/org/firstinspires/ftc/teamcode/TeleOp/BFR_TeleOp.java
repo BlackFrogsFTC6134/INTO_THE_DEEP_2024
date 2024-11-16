@@ -240,8 +240,8 @@ public class BFR_TeleOp extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive() && !isStopRequested()) {
             updateTelemetryAfterStart();
-            //handleDistanceSensors();
-            //handleDigitalInputs();
+            handleDistanceSensors();
+            handleDigitalInputs();
             handleGamePad1Inputs();
             handleGamepad2Inputs();
             updateSubsystemsMotorPower();

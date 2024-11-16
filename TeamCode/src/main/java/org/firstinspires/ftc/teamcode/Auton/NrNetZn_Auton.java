@@ -18,7 +18,7 @@ public class NrNetZn_Auton extends LinearOpMode {
     double linearViperPower = 0;
     double rotateViperPower = 0;
     public static int RT_targetPosition = 3500;
-    public static int LI_targetPosition = 600;
+    public static int LI_targetPosition = 575;
     public static int RT_targetPositionRung =4000;
 
     @Override
