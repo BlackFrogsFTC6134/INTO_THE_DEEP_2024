@@ -18,7 +18,7 @@ public class NrNetZn_Auton extends LinearOpMode {
     double linearViperPower = 0;
     double rotateViperPower = 0;
     public static int RT_targetPosition = 3500;
-    public static int LI_targetPosition = 575;
+    public static int LI_targetPosition = 600;
     public static int RT_targetPositionRung =4000;
 
     @Override
@@ -83,7 +83,7 @@ public class NrNetZn_Auton extends LinearOpMode {
 
             Actions.runBlocking(
                     drive.actionBuilder(startPose)
-                            .strafeTo(new Vector2d(23, 0))
+                            .strafeTo(new Vector2d(21.5, 0))
                             /*** To move without hanging the spacimen ***/
           //                  .strafeTo(new Vector2d(0, 27))
                             .build()
@@ -100,8 +100,16 @@ public class NrNetZn_Auton extends LinearOpMode {
             }
             linearViper.setPower(0);
             sleep(100);
-            continuousIntakeServo1.setPosition(0.35);
+            continuousIntakeServo1.setPosition(1);
             sleep(1000);
+            rotateViper.setTargetPosition(3000);
+            rotateViper.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+            rotateViper.setPower(0.9);
+            while (rotateViper.isBusy()) {
+                telemetry.addData("Current position", rotateViper.getTargetPosition());
+                telemetry.update();
+            }
+            rotateViper.setPower(0);
             //TO push the spike sample to the observation zone
             Actions.runBlocking(
                     drive.actionBuilder(drive.pose)

@@ -19,8 +19,8 @@ public class NrObservaZn_Auton extends LinearOpMode {
     private DcMotorEx rotateViper = null;
     double linearViperPower = 0;
     double rotateViperPower = 0;
-    public static int RT_targetPosition = 3500;
-    public static int LI_targetPosition = 450;
+    public static int RT_targetPosition = 3550;
+    public static int LI_targetPosition = 600;
 
     @Override
     public void runOpMode() {
@@ -85,23 +85,33 @@ public class NrObservaZn_Auton extends LinearOpMode {
             Actions.runBlocking(
                     drive.actionBuilder(startPose)
 //                            .strafeTo(new Vector2d(26.5, 10))
-                            .strafeTo(new Vector2d(28, 10))
+                            .strafeTo(new Vector2d(24.5, 10))
                             .waitSeconds(1)
                             .build()
 
             );
             sleep(100);
-            linearViper.setTargetPosition(LI_targetPosition);
-            linearViper.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-            linearViper.setPower(0.9);
-            while (linearViper.isBusy()) {
+          linearViper.setTargetPosition(LI_targetPosition);
+          linearViper.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+          linearViper.setPower(0.9);
+          while (linearViper.isBusy()) {
                 telemetry.addData("Current position", linearViper.getTargetPosition());
                 telemetry.update();
             }
             linearViper.setPower(0);
             sleep(100);
-            continuousIntakeServo1.setPosition(0.35);
+            continuousIntakeServo1.setPosition(1);
             sleep(1000);
+
+            rotateViper.setTargetPosition(3000);
+            rotateViper.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+            rotateViper.setPower(0.9);
+            while (rotateViper.isBusy()) {
+                telemetry.addData("Current position", rotateViper.getTargetPosition());
+                telemetry.update();
+            }
+            rotateViper.setPower(0);
+
             //Strafing to the Observation zone
  /*           Actions.runBlocking(
                     drive.actionBuilder(startPose)
@@ -109,10 +119,14 @@ public class NrObservaZn_Auton extends LinearOpMode {
                             .build()
             );
 */
+      //      linearViper.setTargetPosition(LI_targetPosition);
+      //      linearViper.setPower(0.9);
+      //      linearViper.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+
             //TO push the spike sample to the observation zone
             Actions.runBlocking(
                      drive.actionBuilder(drive.pose)
-                    .strafeTo(new Vector2d(26.5, -25))
+                    .strafeTo(new Vector2d(24.5, -25))
                     .waitSeconds(1)
                     .lineToX(60)
                     .waitSeconds(2)
